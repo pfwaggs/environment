@@ -1,0 +1,8 @@
+#START.m3uname AAA
+m3uname () 
+{ 
+    local tmp=${PWD#${PWD%/*/*}/}
+    name=${tmp/\//_-_};
+    mv "$1" $name.m3u
+}
+#END.m3uname ZZZ

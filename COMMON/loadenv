@@ -1,0 +1,10 @@
+#START.loadenv AAA
+loadenv () {
+    declare path func
+    [[ $1 == -c ]] && unset -f -- $(compgen -A function -X ${FUNCNAME[0]}) && shift
+    for func; do
+	[[ ! -s $func ]] && continue
+	[[ -d ${path:=$func} ]] && for func in $(ls -I'#*' $path); do . $path/$func; done && path= || . $func
+    done
+}
+#END.loadenv ZZZ

@@ -1,0 +1,3 @@
+#START.pathify AAA
+pathify () { perl -nE 'chomp; ( ! /^\#EXT/ ) && s{^}{$ENV{PWD}/}; say' $1; }
+#END.pathify ZZZ

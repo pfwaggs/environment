@@ -1,0 +1,9 @@
+#START.lsu AAA
+lsu () {
+    local np[0]=${1:-$PWD}
+    while [[ -n ${np[0]%/*} ]]; do
+	np=("${np[0]%/*}" "${np[@]}")
+    done
+    ls -ld / "${np[@]}"
+}
+#END.lsu ZZZ

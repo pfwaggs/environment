@@ -1,0 +1,6 @@
+#START.retag AAA
+retag () {
+    mkdir -p ~1/"$1"
+    oggify -o mp3 -t "$1" ~1/"$1"
+}
+#END.retag ZZZ

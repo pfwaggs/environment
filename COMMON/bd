@@ -1,0 +1,12 @@
+#START.bd AAA
+bd () { 
+# we get the RDIR value from the #RDIR file
+    [[ ! -s '#RDIR' ]] && echo 'no #RDIR file' && return 1
+    source '#RDIR'
+    echo checking $PWD and $RDIR
+    rsync -navhi --progress . "$RDIR"
+    read -p 'shall we run rsync? ' ans
+    [[ $ans =~ [nN].* ]] && echo 'not now then, maybe later' && return 1
+    rsync -avhi --progress . "$RDIR"
+}
+#END.bd ZZZ

@@ -1,0 +1,12 @@
+#START.mdorg AAA
+mdorg () 
+{ 
+    local list=$@;
+    for n in $list;
+    do
+        [[ $n =~ ^The_ ]] && letter=${n:4:1} || letter=${n:0:1};
+        [[ ! -d $letter ]] && mkdir $letter;
+        mv $n $letter;
+    done
+}
+#END.mdorg ZZZ

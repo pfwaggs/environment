@@ -1,0 +1,4 @@
+#START.vars AAA
+ALPHA=ABCDEFGHIJKLMNOPQRSTUVWXYZ
+alpha=abcdefghijklmnopqrstuvwxyz
+#END.vars ZZZ

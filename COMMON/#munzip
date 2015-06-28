@@ -1,0 +1,7 @@
+munzip () { DT=$(date +"%F")
+  [ ! -d $DT ] && mkdir $DT
+  x=$(ls -d $DT/install-* | wc -l)
+  for i in "$@"; do
+    unzip -d $DT/install-$((++x)) "$i"
+  done
+}

@@ -1,0 +1,49 @@
+function +dir () { local z=$(ic $1); eval $z=$PWD:${!z}; }
+
+function -dir () { local z=$(ic $1); eval $z=${!z#*:}; }
+
+#lsu () {
+#  k=${1:-$(pwd)}
+#  /bin/ls -ld /
+#  while [ -n "$k" ]
+#  do
+#    /bin/ls -ld "$k"
+#    k=${k%/*}
+#  done | /usr/bin/tac
+#}
+
+#clpath () { eval "$1=\$(echo ${!1} | sed 's,$2,,')"; }
+clpath () { eval "$1=${!1/$2}"; hash -r; }
+
+P () { eval "$@" | $PAGER; }
+
+alink () { ln "$@" ../\ installed; }
+
+dlog () { printf "%s\t%s\t%s\n" $(date '+%m/%d/%Y %H:%M') $2 >> $1; }
+
+#pushd () {
+#    case $# in
+#	0) builtin pushd ;;
+#	1)
+#	    builtin pushd . 2>/dev/null
+#	    cd "$@" &>/dev/null
+#	;;
+#	2)
+#	    opt=$1
+#	    shift
+#	    if [[ -n "$@" ]]; then
+#		pushd "$@" 2>/dev/null
+#	    fi
+#	    case $opt in
+#		-n) builtin pushd 2>/dev/null ;;
+#		+N) builtin pushd +N 2>/dev/null ;;
+#		-N) builtin pushd -N 2>/dev/null ;;
+#	    esac
+#	    ;;
+#    esac
+#}
+
+charconv () { c="$1"; shift; for n in "$@"; do mv "$n" "${n//${c:0:1}/${c:1:1}}"; done; }
+
+lst () { ls -lrt "${1:-.}" | tail -5; }
+

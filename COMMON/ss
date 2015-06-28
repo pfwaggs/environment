@@ -1,0 +1,3 @@
+#START.ss AAA
+ss () { ps -f -u ${1:-$(id -un)}; }
+#END.ss ZZZ

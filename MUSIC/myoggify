@@ -1,0 +1,6 @@
+#START.myoggify AAA
+myoggify () {
+    mkdir -p ~1/"$1"
+    oggify -o mp3 "$1" ~1/"$1"
+}
+#END.myoggify ZZZ

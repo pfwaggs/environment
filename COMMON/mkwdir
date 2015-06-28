@@ -1,0 +1,11 @@
+#START.mkwdir AAA
+mkwdir () {
+    local d=$(date +%F)
+    num=$(ls -d $d* 2>/dev/null | wc -l)
+    ((num++))
+    printf -v d "$d.%02d" $num
+    mkdir $d
+    cd $_
+    echo $_
+}
+#END.mkwdir ZZZ

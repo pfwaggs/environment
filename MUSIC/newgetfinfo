@@ -1,0 +1,9 @@
+#START.netgetfinfo AAA
+newgetfinfo () 
+{ 
+    for i in *.flac;
+    do
+        metaflac --export-tags-to=${i%.flac}.finfo "$i";
+    done
+}
+#END.netgetfinfo ZZZ

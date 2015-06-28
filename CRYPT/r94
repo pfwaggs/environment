@@ -1,0 +1,12 @@
+#START.r94 AAA
+r94 () {
+    chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()-_=+[]{}|;:,./<>?`"'"'"
+    unset new
+    while [[ ${#chars} > 0 ]]; do
+	n=$((RANDOM%${#chars}))
+	new=${new}${chars:n:1}
+	chars=${chars:0:n}${chars:n+1}
+    done
+    echo -ne "$new\n"
+}
+#END.r94 ZZZ

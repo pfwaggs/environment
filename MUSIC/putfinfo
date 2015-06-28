@@ -1,0 +1,9 @@
+#START.putfinfo AAA
+putfinfo () {
+  metaflac --remove-all-tags *.flac
+  for i in *.flac
+  do
+    metaflac --import-tags-from=${i:0:2}.finfo "$i"
+  done
+}
+#END.putfinfo ZZZ

@@ -1,0 +1,3 @@
+#START.deltags AAA
+deltags () { sed -s -i -r -e "/$1/d"; }
+#END.deltags ZZZ

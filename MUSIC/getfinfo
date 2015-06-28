@@ -1,0 +1,8 @@
+#START.getfinfo AAA
+getfinfo () {
+  for i in *.flac
+  do
+    metaflac --export-tags-to=${i:0:2}.finfo "$i"
+  done
+}
+#END.getfinfo ZZZ

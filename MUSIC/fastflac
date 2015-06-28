@@ -1,0 +1,3 @@
+#START.fastflac AAA
+fastflac () { metaflac --list --block-number=2 "$1" | perl -ne 'chomp; s/\s+comment\[\d+\]:\s// && print "$_\n"'; }
+#END.fastflac ZZZ

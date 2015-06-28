@@ -1,0 +1,38 @@
+#START.myripit2 AAA
+myripit2 () {
+    local uuser user=$1 dev=${2:-cdrom}
+    DEV=/dev/$dev
+    [[ $user != */* ]] && user=$user/01
+    raw=$(udevadm info -a -p $(udevadm info -q path -n $DEV) | grep '=="target' | tr -c -d "0-9:\n" | tr ':' ',')
+    uuser=${user/\/}
+    /bin/sh << EOF
+	ripit --outputdir $PWD --device $DEV --dirtemplate '"$user"' --tracktemplate '"${uuser}_\$tracknum"'
+EOF
+    pushd $user
+    #read dev junk <<< $(/opt/schily/bin/cdda2wav -scanbus 2>&1 | grep TSST)
+    /opt/schily/bin/cdda2wav -L 0 -J dev=$raw
+    for track in *.flac; do
+	finfo=${track/flac/finfo}
+	metaflac --export-tags-to=$finfo $track
+	TRACK=${track:7:2}
+#	read junk length junk <<< $(grep Tracklength audio_${TRACK}.inf | tr -d ',')
+#	grep Tracklength audio_${TRACK}.inf | tr -d " \t" | tr '[[:lower:]]' '[[:upper:]]' >> $finfo
+	tlength=$(grep Tracklength audio_${TRACK}.inf | tr '[[:lower:]]' '[[:upper:]]' | tr -d " \t")
+	grep     CDINDEX audio_${TRACK}.inf | tr -d " \t\'" >> $finfo
+	grep  Trackstart audio_${TRACK}.inf | tr -d " \t"   | tr '[[:lower:]]' '[[:upper:]]' >> $finfo
+	echo $tlength >> $finfo
+	read junk length junk <<< $(echo $tlength | tr '=,' '  ')
+	seconds=$(( (length-(length % 75)) / 75 ))
+	echo TRACKTIME=$seconds >> $finfo
+	metaflac --remove-all-tags $track
+	metaflac --import-tags-from=$finfo $track
+	read junk title <<< $(grep TITLE= $finfo | tr '=' ' ')
+	echo -e "$track\t$title" >> ${uuser}_trackmap.txt
+	rm $finfo
+    done
+    mv *.m3u ${uuser}.m3u
+    rm *.inf
+    popd
+    eject $dev
+}
+#END.myripit2 ZZZ

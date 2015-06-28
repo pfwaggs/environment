@@ -1,0 +1,13 @@
+#START.prep AAA
+prep () {
+    local OPTIND OPTARG
+    local opt p=~/.base.pl b=~/.base.sh f=~/.base.fnc
+    while getopts 'p:b:f:' opt; do
+        [[ -f $1 ]] && echo "$OPTARG exists" && continue
+	cp ${!opt} >> $OPTARG
+	[[ $opt =~ f ]] && sed -i -e "s/Zz/$OPTARG/" $OPTARG
+	[[ $opt =~ [pb] ]] && chmod 700 $OPTARG
+	OPTARG=''
+    done
+}
+#END.prep ZZZ
